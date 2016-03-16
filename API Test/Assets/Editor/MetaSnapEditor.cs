@@ -7,15 +7,15 @@ using System.Collections.Generic;
 public class MetaSnapEditor : Editor 
 {
     public Object obj = null;
-    public List<Object> objList;
+    public List<GameObject> objList;
 
     public override void OnInspectorGUI()
     {
         //DrawDefaultInspector();
 
-        MetaSnap ms = (MetaSnap)target;        
+        MetaSnap ms = (MetaSnap)target;
 
-        
+        objList = ms.socketArray;
 
         EditorGUILayout.LabelField("MetaSnap");
 
@@ -63,33 +63,33 @@ public class MetaSnapEditor : Editor
             }
 
             EditorGUILayout.EndHorizontal();
-
-            if (GUILayout.Button("Remove preset", GUILayout.MinWidth(235f), GUILayout.MaxWidth(1000f)))
-            {
-                //ms.RemoveSocket();
-            }
-
             EditorGUILayout.EndVertical();
         }
 
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndVertical();
 
-        EditorGUILayout.BeginVertical("box");
-        EditorGUILayout.BeginHorizontal();
-
-        for(int i = 0; i < objList.Capacity; i++)
+        
+        
+        if(ms.socketArray.Count != 0)
         {
-            if (GUILayout.Button("-", GUILayout.MinWidth(5f), GUILayout.MaxWidth(5f)))
+            EditorGUILayout.BeginVertical("box");
+
+            for (int i = 0; i < ms.socketArray.Count; i++)
             {
-                ms.RemoveSocket(i);
+                EditorGUILayout.BeginHorizontal("box");                
+
+                ms.socketArray[i] = (GameObject)EditorGUILayout.ObjectField("Socket " + i, ms.socketArray[i], typeof(Object), false, GUILayout.MinWidth(100f), GUILayout.MaxWidth(1000f));
+
+                if (GUILayout.Button("-", GUILayout.MinWidth(15f), GUILayout.MaxWidth(50f)))
+                {
+                    ms.RemoveSocket(i);
+                }
+
+                EditorGUILayout.EndHorizontal();
             }
 
-            objList[i] = EditorGUILayout.ObjectField("Socket " + i, objList[i], typeof(Object), true, GUILayout.MinWidth(100f), GUILayout.MaxWidth(1000f));            
+            EditorGUILayout.EndVertical();
         }        
-
-        EditorGUILayout.EndHorizontal();
-        EditorGUILayout.EndVertical();
-
     }
 }

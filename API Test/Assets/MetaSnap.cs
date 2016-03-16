@@ -21,15 +21,15 @@ public class MetaSnap : MonoBehaviour
 
     public void AddSocketEdge()
     {
-        Debug.Log("added socket to the edge");
         socket = Instantiate(socketPrefab, gameObject.GetComponent<Collider>().bounds.max, transform.rotation) as GameObject;
+        socket.transform.SetParent(gameObject.transform);
         socketArray.Add(socket);
     }
 
     public void AddSocketSurface()
     {
-        Debug.Log("Added socket to surface");
         socket = Instantiate(socketPrefab, gameObject.GetComponent<Collider>().bounds.min, transform.rotation) as GameObject;
+        socket.transform.SetParent(gameObject.transform);
         socketArray.Add(socket);
     }
 
@@ -41,7 +41,7 @@ public class MetaSnap : MonoBehaviour
 
     public void RemoveSocket(int index)
     {
-        Debug.Log("Removed socket");
+        DestroyImmediate(socketArray[index]);
         socketArray.RemoveAt(index);
     }
 }
