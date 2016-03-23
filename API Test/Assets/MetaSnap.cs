@@ -6,7 +6,15 @@ public class MetaSnap : MonoBehaviour
     public bool addedSocket;
     public Object socketPrefab;
     public GameObject socket;
+    public string socketType;
     public List<GameObject> socketArray = new List<GameObject>();
+
+    public MetaSnap(GameObject aSocket, string aSocketType)
+    {
+        socket = aSocket;
+        socketType = aSocketType;
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -23,14 +31,17 @@ public class MetaSnap : MonoBehaviour
     {
         socket = Instantiate(socketPrefab, gameObject.GetComponent<Collider>().bounds.max, transform.rotation) as GameObject;
         socket.transform.SetParent(gameObject.transform);
+        socketType = "Edge Socket ";
         socketArray.Add(socket);
+        
     }
 
     public void AddSocketSurface()
     {
         socket = Instantiate(socketPrefab, gameObject.GetComponent<Collider>().bounds.min, transform.rotation) as GameObject;
         socket.transform.SetParent(gameObject.transform);
-        socketArray.Add(socket);
+        socketType = "Surface Socket ";
+        socketArray.Add(socket);        
     }
 
     public void AddSocketManually()
